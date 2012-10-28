@@ -2,6 +2,8 @@
 *	@Author Nicholas Uth
 *	October 29, 2012 -- CSE 274
 *	
+*	@Sources: Child class to Starbucks class by Bo Brinkman.
+*
 *	Class is intended to work as a KD tree. It handles the coordinates and description of a starbucks and the paths to it's subtrees.
 *	
 */
@@ -20,9 +22,28 @@ public:
 	uthnpStarbucks* right;
 	Entry entry;
 
+	/*
+	*	Creates a null node. Can be used as a root or just a basic null tester.
+	*/
 	uthnpStarbucks();
+	/*
+	*	Creates a new node with the given Entry data (x,y coords and description)
+	*/
 	uthnpStarbucks(Entry* data);
-	uthnpStarbucks* add(uthnpStarbucks* root, Entry* data, bool isX);
+	/*
+	*	Deletes the contents of the node and the node itself.
+	*/
+	~uthnpStarbucks();
+	/*
+	*	Recursively adds a node to the KD tree. Alternatingly sorts the levels based on X or Y coordinate.
+	*/
+	uthnpStarbucks* add(Entry* data, bool isX);
+	/*
+	*	Builds an entire tree from an array containing Entry objects.
+	*/
 	virtual void build(Entry* c, int n);
+	/*
+	*	Recursively (alternating X and Y) searches the tree for the node containing the closest Starbucks location.
+	*/
 	virtual Entry* getNearest(double x, double y);
 };
