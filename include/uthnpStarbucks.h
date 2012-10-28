@@ -20,7 +20,9 @@ class uthnpStarbucks : Starbucks
 public:
 	uthnpStarbucks* left;
 	uthnpStarbucks* right;
-	Entry entry;
+	Entry* entry;
+
+	static const int threshold = 0.00001;
 
 	/*
 	*	Creates a null node. Can be used as a root or just a basic null tester.
@@ -37,11 +39,15 @@ public:
 	/*
 	*	Recursively adds a node to the KD tree. Alternatingly sorts the levels based on X or Y coordinate.
 	*/
-	uthnpStarbucks* add(Entry* data, bool isX);
+	void add(Entry* data, bool isX);
 	/*
 	*	Builds an entire tree from an array containing Entry objects.
 	*/
 	virtual void build(Entry* c, int n);
+	/*
+	*	Randomizes the order of an array's contents.
+	*/
+	void randomizeArray (Entry* input, int len);
 	/*
 	*	Recursively (alternating X and Y) searches the tree for the node containing the closest Starbucks location.
 	*/

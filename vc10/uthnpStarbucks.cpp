@@ -5,17 +5,43 @@ using namespace std;
 
 uthnpStarbucks::uthnpStarbucks()
 {
+	*this = NULL;
+	//this->entry = NULL;
+	//this->left = NULL;
+	//this->right = NULL;
 }
 
 uthnpStarbucks::uthnpStarbucks(Entry* data)
 {
+	this->entry = data;
+	this->left = NULL;
+	this->right = NULL;
 }
 
 uthnpStarbucks::~uthnpStarbucks()
 {
+	delete this->entry;
 }
 
-uthnpStarbucks* uthnpStarbucks::add(Entry* data, bool isX)
+void uthnpStarbucks::add(Entry* data, bool isX)
+{
+	if (this == NULL) return;
+	if (isX)
+	{
+		if(data->x < this->entry->x)
+		{
+		}
+		else
+		{
+		}
+	}
+	else
+	{
+
+	}
+}
+
+void uthnpStarbucks::randomizeArray (Entry* input, int len)
 {
 }
 
