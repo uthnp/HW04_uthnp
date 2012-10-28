@@ -30,14 +30,43 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 	{
 		if(data->x < this->entry->x)
 		{
+			if (this->left == NULL)
+			{
+				this->left = new uthnpStarbucks(data);
+				return;
+			}
+			else this->left->add(data, !isX);
 		}
 		else
 		{
+			if (this->right == NULL)
+			{
+				this->right = new uthnpStarbucks(data);
+				return;
+			}
+			else this->right->add(data, !isX);
 		}
 	}
 	else
 	{
-
+		if(data->y < this->entry->y)
+		{			
+			if (this->left == NULL)
+			{
+				this->left = new uthnpStarbucks(data);
+				return;
+			}
+			else this->left->add(data, !isX);
+		}
+		else
+		{
+			if (this->right == NULL)
+			{
+				this->right = new uthnpStarbucks(data);
+				return;
+			}
+			else this->right->add(data, !isX);
+		}
 	}
 }
 
@@ -51,4 +80,5 @@ void uthnpStarbucks::build(Entry* c, int n)
 
 Entry* uthnpStarbucks::getNearest(double x, double y)
 {
+	return NULL;
 }
