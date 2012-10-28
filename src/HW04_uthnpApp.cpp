@@ -15,6 +15,7 @@ class HW04_uthnpApp : public AppBasic {
 
 void HW04_uthnpApp::setup()
 {
+	//write code here~~
 }
 
 void HW04_uthnpApp::mouseDown( MouseEvent event )
