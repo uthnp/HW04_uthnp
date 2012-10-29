@@ -61,7 +61,7 @@ void HW04_uthnpApp::setup()
 	//when finished, call find nearest on series of coordinates.
 	//save results to file
 
-		Entry* temp = root->getNearest(0.125013, 0.349959);
+		Entry* temp = root->getNearest(0.75, 0.75);
 		ofstream saveTo;
 		saveTo.open("../save.txt", ios::out);
 		
