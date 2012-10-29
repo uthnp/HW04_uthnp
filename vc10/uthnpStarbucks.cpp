@@ -1,5 +1,10 @@
 #include "Starbucks.h"
 #include "uthnpStarbucks.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -90,38 +95,29 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 Entry* uthnpStarbucks::randomizeArray (Entry* input, int len)
 {
 	Entry* randArray = new Entry[len];
-	int random1;
-	int random2;
-	Entry* temp;
+	bool* isSelected = new bool[len];
+	int random;
 
 	for (int i = 0; i < len; i++)
 	{
-		random1 = (rand() % len);
-		random2 = (rand() % len);
+		random = (rand() % len);
 
-		while (random1 == random2)
+		while (isSelected[random] == true)
 		{
-			random1 = (rand() % len);
-			random2 = (rand() % len);
+			random = (rand() % len);
 		}
-		temp = new Entry();
-		temp->identifier = (input[random1].identifier);
-		temp->x = input[random1].x;
-		temp->y = input[random1].y;
-
-		input[random1] = input[random2];
-		input[random2] = *temp;
-
-		delete temp;
+		isSelected[random] = true;
+		randArray[i] = input[random];
 	}
 
 	return randArray;
 }
 
 
-void uthnpStarbucks::build(Entry* in, int n)
+void uthnpStarbucks::build(Entry* c, int n)
 {
-	Entry* c = randomizeArray(in, n);
+	//Entry* c = randomizeArray(in, n);
+	random_shuffle(c, c+n);
 	this->entry = &(c[0]);
 
 	for (int i = 1; i < 2960; i++)

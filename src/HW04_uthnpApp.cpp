@@ -61,11 +61,12 @@ void HW04_uthnpApp::setup()
 	//when finished, call find nearest on series of coordinates.
 	//save results to file
 
+		Entry* temp = root->getNearest(0.125013, 0.349959);
 		ofstream saveTo;
 		saveTo.open("../save.txt", ios::out);
 		
-		for (int i = 0; i < 2960; i++)
-			saveTo << entryArray[i].x << "\t" << entryArray[i].y << endl;
+		//saveTo << entryArray[1].identifier << "\t" <<entryArray[1].x << "\t" << entryArray[1].y << endl;
+		saveTo << temp->identifier << "\t" <<temp->x << "\t" << temp->y << endl;
 
 		saveTo.close();
 		firstRun = false;
@@ -77,10 +78,6 @@ void HW04_uthnpApp::mouseDown( MouseEvent event )
 
 void HW04_uthnpApp::update()
 {
-	if (!firstRun)
-	{
-		
-	}
 }
 
 void HW04_uthnpApp::draw()
