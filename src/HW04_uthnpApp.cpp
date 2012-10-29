@@ -30,13 +30,24 @@ void HW04_uthnpApp::setup()
 	{
 		entryAdding = new Entry();
 		getline(locationsFile, entryAdding->identifier, ',');
-		getline(locationsFile, tempString, ',');
-		entryAdding->x = atof()
+		getline(locationsFile, tempString, ','); //TODO: get the double values.
+		
 	}
-
 	locationsFile.close();
+
 	//transfer vector data to Entry array
+	Entry* entryArray = new Entry[vect.size()];
+	int len = vect.size();
+	for (int i = 0; i < vect.size(); i++)
+	{
+		entryArray[i] = *(vect.at(i));
+	}
+	delete &vect;
+
 	//call build function with the array and length.
+	uthnpStarbucks* root;
+	(*root).build(entryArray,len);
+
 	//when finished, call find nearest on series of coordinates.
 	//save results
 	//...
