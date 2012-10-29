@@ -91,7 +91,7 @@ void uthnpStarbucks::randomizeArray (Entry* input, int len)
 
 void uthnpStarbucks::build(Entry* c, int n)
 {
-	this = new uthnpStarbucks(c[0]);
+	this->entry = &(c[0]);
 
 	randomizeArray(c, n);
 	for (int i = 1; i < n; i++)

@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace ci;
 using namespace ci::app;
@@ -16,6 +17,12 @@ class HW04_uthnpApp : public AppBasic {
 	void mouseDown( MouseEvent event );	
 	void update();
 	void draw();
+	bool firstRun;
+	/*
+	*	Converts a string to a double. 
+	*	Source: http://www.cplusplus.com/forum/articles/9645/
+	*/
+	double stringToDouble(string str);
 };
 
 void HW04_uthnpApp::setup()
@@ -25,13 +32,16 @@ void HW04_uthnpApp::setup()
 	string tempString;
 	ifstream locationsFile;
 	locationsFile.open("Starbucks_2006.csv", ios::in);
-	//read file (for loop) and put data into new entry object. put entry object into vector. note length.
+	//read file and put data into new entry object. put entry object into vector.
 	while (locationsFile.good())
 	{
 		entryAdding = new Entry();
 		getline(locationsFile, entryAdding->identifier, ',');
-		getline(locationsFile, tempString, ','); //TODO: get the double values.
-		
+		getline(locationsFile, tempString, ','); //get x value
+		entryAdding->x = stringToDouble(tempString);
+		getline(locationsFile, tempString, '\r'); //get y value
+		entryAdding->y = stringToDouble(tempString);
+		vect.push_back(entryAdding);
 	}
 	locationsFile.close();
 
@@ -42,15 +52,15 @@ void HW04_uthnpApp::setup()
 	{
 		entryArray[i] = *(vect.at(i));
 	}
-	delete &vect;
+	//delete &vect;
 
 	//call build function with the array and length.
-	uthnpStarbucks* root;
+	uthnpStarbucks* root = new uthnpStarbucks();
 	(*root).build(entryArray,len);
 
 	//when finished, call find nearest on series of coordinates.
-	//save results
-	//...
+	//save results to file
+	firstRun = true;
 }
 
 void HW04_uthnpApp::mouseDown( MouseEvent event )
@@ -59,12 +69,27 @@ void HW04_uthnpApp::mouseDown( MouseEvent event )
 
 void HW04_uthnpApp::update()
 {
+	if (!firstRun)
+	{
+		ofstream saveTo;
+		saveTo.open("../save.txt", ios::out);
+
+		saveTo.close();
+		firstRun = false;
+	}
 }
 
 void HW04_uthnpApp::draw()
 {
 	//clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
+}
+
+double HW04_uthnpApp::stringToDouble(string str)
+{
+	stringstream stream(str);
+	double result;
+	return stream >> result ? result : 0;
 }
 
 CINDER_APP_BASIC( HW04_uthnpApp, RendererGl )

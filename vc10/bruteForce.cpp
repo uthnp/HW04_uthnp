@@ -1,14 +1,5 @@
 #pragma once
-#include "Starbucks.h"
-
-using namespace std;
-
-class bruteForce
-{
-public:
-	Entry* findGuaranteedAnswer(Entry* arr, int len, double x, double y);
-};
-
+#include "bruteForce.h"
 
 Entry* findGuaranteedAnswer (Entry* arr, int len, double x, double y)
 {
@@ -35,3 +26,43 @@ Entry* findGuaranteedAnswer (Entry* arr, int len, double x, double y)
 
 	return currentBest;
 }
+
+double stringToDouble(string str)
+{
+	stringstream stream(str);
+	double result;
+	return stream >> result ? result : 0;
+}
+/*
+int main ()
+{
+	vector<Entry*> vect;
+	Entry* entryAdding;
+	string tempString;
+	ifstream locationsFile;
+	locationsFile.open("Starbucks_2006.csv", ios::in);
+	//read file and put data into new entry object. put entry object into vector.
+	while (locationsFile.good())
+	{
+		entryAdding = new Entry();
+		getline(locationsFile, entryAdding->identifier, ',');
+		getline(locationsFile, tempString, ','); //get x value
+		entryAdding->x = stringToDouble(tempString);
+		getline(locationsFile, tempString, '\n'); //get y value
+		entryAdding->y = stringToDouble(tempString);
+		vect.push_back(entryAdding);
+	}
+	locationsFile.close();
+
+	//transfer vector data to Entry array
+	Entry* entryArray = new Entry[vect.size()];
+	int len = vect.size();
+	for (int i = 0; i < vect.size(); i++)
+	{
+		entryArray[i] = *(vect.at(i));
+	}
+	
+
+	return -1;
+}
+*/
