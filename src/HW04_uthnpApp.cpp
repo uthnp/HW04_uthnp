@@ -48,11 +48,11 @@ void HW04_uthnpApp::setup()
 	//transfer vector data to Entry array
 	Entry* entryArray = new Entry[vect.size()];
 	int len = vect.size();
-	for (int i = 0; i < vect.size(); i++)
+	for (int i = 1; i < vect.size(); i++)
 	{
 		entryArray[i] = *(vect.at(i));
 	}
-	//delete &vect;
+	vect.~vector();
 
 	//call build function with the array and length.
 	uthnpStarbucks* root = new uthnpStarbucks();
@@ -60,7 +60,15 @@ void HW04_uthnpApp::setup()
 
 	//when finished, call find nearest on series of coordinates.
 	//save results to file
-	firstRun = true;
+
+		ofstream saveTo;
+		saveTo.open("../save.txt", ios::out);
+		
+		for (int i = 0; i < 2960; i++)
+			saveTo << entryArray[i].x << "\t" << entryArray[i].y << endl;
+
+		saveTo.close();
+		firstRun = false;
 }
 
 void HW04_uthnpApp::mouseDown( MouseEvent event )
@@ -71,11 +79,7 @@ void HW04_uthnpApp::update()
 {
 	if (!firstRun)
 	{
-		ofstream saveTo;
-		saveTo.open("../save.txt", ios::out);
-
-		saveTo.close();
-		firstRun = false;
+		
 	}
 }
 

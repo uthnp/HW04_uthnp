@@ -23,6 +23,7 @@ public:
 	Entry* entry;
 
 	static const int threshold = 0.00001;
+	int numIter;
 
 	/*
 	*	Creates a null node. Can be used as a root or just a basic null tester.
@@ -47,7 +48,7 @@ public:
 	/*
 	*	Randomizes the order of an array's contents.
 	*/
-	void randomizeArray (Entry* input, int len);
+	Entry* randomizeArray (Entry* input, int len);
 	/*
 	*	Recursively (alternating X and Y) searches the tree for the node containing the closest Starbucks location.
 	*/

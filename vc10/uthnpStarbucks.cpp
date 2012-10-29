@@ -28,14 +28,18 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 	if (this == NULL) return;
 	if (isX)
 	{
-		if(data->x < this->entry->x)
+		if(data->x <= this->entry->x)
 		{
 			if (this->left == NULL)
 			{
 				this->left = new uthnpStarbucks(data);
 				return;
 			}
-			else this->left->add(data, !isX);
+			else
+			{
+				this->left->add(data, !isX);
+				return;
+			}
 		}
 		else
 		{
@@ -44,19 +48,27 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 				this->right = new uthnpStarbucks(data);
 				return;
 			}
-			else this->right->add(data, !isX);
+			else 
+			{
+				this->right->add(data, !isX);
+				return;
+			}
 		}
 	}
 	else
 	{
-		if(data->y < this->entry->y)
+		if(data->y <= this->entry->y)
 		{			
 			if (this->left == NULL)
 			{
 				this->left = new uthnpStarbucks(data);
 				return;
 			}
-			else this->left->add(data, !isX);
+			else
+			{
+				this->left->add(data, !isX);
+				return;
+			}
 		}
 		else
 		{
@@ -65,36 +77,54 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 				this->right = new uthnpStarbucks(data);
 				return;
 			}
-			else this->right->add(data, !isX);
+			else
+			{
+				this->right->add(data, !isX);
+				return;
+			}
 		}
 	}
+	return;
 }
 
-void uthnpStarbucks::randomizeArray (Entry* input, int len)
+Entry* uthnpStarbucks::randomizeArray (Entry* input, int len)
 {
-	int random1 = 0;
-	int random2 = 0;
-	Entry temp;
+	Entry* randArray = new Entry[len];
+	int random1;
+	int random2;
+	Entry* temp;
 
-	for (int i = 0; i < 4*len; i++)
+	for (int i = 0; i < len; i++)
 	{
+		random1 = (rand() % len);
+		random2 = (rand() % len);
+
 		while (random1 == random2)
 		{
 			random1 = (rand() % len);
 			random2 = (rand() % len);
 		}
-		temp = input[random1];
+		temp = new Entry();
+		temp->identifier = (input[random1].identifier);
+		temp->x = input[random1].x;
+		temp->y = input[random1].y;
+
 		input[random1] = input[random2];
-		input[random2] = temp;
+		input[random2] = *temp;
+
+		delete temp;
 	}
+
+	return randArray;
 }
 
-void uthnpStarbucks::build(Entry* c, int n)
+
+void uthnpStarbucks::build(Entry* in, int n)
 {
+	Entry* c = randomizeArray(in, n);
 	this->entry = &(c[0]);
 
-	randomizeArray(c, n);
-	for (int i = 1; i < n; i++)
+	for (int i = 1; i < 2960; i++)
 	{
 		this->add(c, true);
 	}
