@@ -58,10 +58,11 @@ void HW04_uthnpApp::setup()
 	uthnpStarbucks* root = new uthnpStarbucks();
 	(*root).build(entryArray,len);
 
+
 	//when finished, call find nearest on series of coordinates.
 	//save results to file
-
-		Entry* temp = root->getNearest(0.75, 0.75);
+	/****** Test run FILE IO
+		Entry* temp = root->getNearest(0.0117, 0.47229);
 		ofstream saveTo;
 		saveTo.open("../save.txt", ios::out);
 		
@@ -74,6 +75,7 @@ void HW04_uthnpApp::setup()
 
 		saveTo.close();
 		firstRun = false;
+	*/
 }
 
 void HW04_uthnpApp::mouseDown( MouseEvent event )
