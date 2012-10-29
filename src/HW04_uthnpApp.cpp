@@ -2,6 +2,9 @@
 #include "cinder/gl/gl.h"
 #include "Starbucks.h"
 #include "uthnpStarbucks.h"
+#include <vector>
+#include <iostream>
+#include <fstream>
 
 using namespace ci;
 using namespace ci::app;
@@ -17,9 +20,21 @@ class HW04_uthnpApp : public AppBasic {
 
 void HW04_uthnpApp::setup()
 {
-	//write code here~~
-	//create vector object.
+	vector<Entry*> vect;
+	Entry* entryAdding;
+	string tempString;
+	ifstream locationsFile;
+	locationsFile.open("Starbucks_2006.csv", ios::in);
 	//read file (for loop) and put data into new entry object. put entry object into vector. note length.
+	while (locationsFile.good())
+	{
+		entryAdding = new Entry();
+		getline(locationsFile, entryAdding->identifier, ',');
+		getline(locationsFile, tempString, ',');
+		entryAdding->x = atof()
+	}
+
+	locationsFile.close();
 	//transfer vector data to Entry array
 	//call build function with the array and length.
 	//when finished, call find nearest on series of coordinates.
@@ -37,7 +52,7 @@ void HW04_uthnpApp::update()
 
 void HW04_uthnpApp::draw()
 {
-	// clear out the window with black
+	//clear out the window with black
 	gl::clear( Color( 0, 0, 0 ) ); 
 }
 

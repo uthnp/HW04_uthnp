@@ -24,6 +24,9 @@
     <ClCompile Include="uthnpStarbucks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bruteForce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Resources.h">
