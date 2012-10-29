@@ -52,4 +52,8 @@ public:
 	*	Recursively (alternating X and Y) searches the tree for the node containing the closest Starbucks location.
 	*/
 	virtual Entry* getNearest(double x, double y);
+	/*
+	* Helps the getNearest function with the recursive search.
+	*/
+	Entry* searchMatch(double x, double y, bool isX);
 };
