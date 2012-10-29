@@ -28,9 +28,10 @@ uthnpStarbucks::~uthnpStarbucks()
 	delete this->entry;
 }
 
+/*
 void uthnpStarbucks::add(Entry* data, bool isX)
 {
-	if (this == NULL) return;
+	if (this == NULL) {return;}
 	if (isX)
 	{
 		if(data->x <= this->entry->x)
@@ -90,6 +91,35 @@ void uthnpStarbucks::add(Entry* data, bool isX)
 		}
 	}
 	return;
+}*/
+
+uthnpStarbucks* uthnpStarbucks::add(Entry* data, bool isX)
+{
+	if (this == NULL) {return new uthnpStarbucks(data);}
+	if ((abs((this->entry->x) - (data->x)) <= threshold) && (abs((this->entry->y) - (data->y)) <= threshold)) {return this;}
+
+	if (isX)
+	{
+		if(data->x <= this->entry->x)
+		{
+			this->left = this->left->add(data, !isX);
+		}
+		else
+		{
+			this->right = this->right->add(data, !isX);
+		}
+	}
+	else
+	{
+		if(data->y <= this->entry->y)
+		{
+			this->left = this->left->add(data, !isX);
+		}
+		else
+		{
+			this->right = this->right->add(data, !isX);
+		}
+	}
 }
 
 Entry* uthnpStarbucks::randomizeArray (Entry* input, int len)
@@ -120,9 +150,9 @@ void uthnpStarbucks::build(Entry* c, int n)
 	random_shuffle(c, c+n);
 	this->entry = &(c[0]);
 
-	for (int i = 1; i < 2960; i++)
+	for (int i = 1; i < n; i++)
 	{
-		this->add(c, true);
+		this->add(c+i, true);
 	}
 
 }
@@ -134,9 +164,10 @@ Entry* uthnpStarbucks::getNearest(double x, double y)
 
 Entry* uthnpStarbucks::searchMatch(double x, double y, bool isX)
 {
-	if (this == NULL) return this->entry;
-	Entry* candidate;
-
+	if (this == NULL)
+	{
+		return this->entry;
+	}
 	//recursive part to find candidate... has no return statements
 	if(isX)
 	{

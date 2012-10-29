@@ -21,9 +21,10 @@ public:
 	uthnpStarbucks* left;
 	uthnpStarbucks* right;
 	Entry* entry;
+	Entry* candidate;
 
 	static const int threshold = 0.00001;
-	int numIter;
+	//int numIter;
 
 	/*
 	*	Creates a null node. Can be used as a root or just a basic null tester.
@@ -40,13 +41,15 @@ public:
 	/*
 	*	Recursively adds a node to the KD tree. Alternatingly sorts the levels based on X or Y coordinate.
 	*/
-	void add(Entry* data, bool isX);
+	//void add(Entry* data, bool isX);
+	uthnpStarbucks* add(Entry* data, bool isX);
 	/*
 	*	Builds an entire tree from an array containing Entry objects.
 	*/
 	virtual void build(Entry* c, int n);
 	/*
 	*	Randomizes the order of an array's contents.
+	*	NOTE: obsolete. Replaced by a 1 line call to the std algorithm method random_shuffle
 	*/
 	Entry* randomizeArray (Entry* input, int len);
 	/*

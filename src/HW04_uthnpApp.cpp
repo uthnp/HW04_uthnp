@@ -65,6 +65,10 @@ void HW04_uthnpApp::setup()
 		ofstream saveTo;
 		saveTo.open("../save.txt", ios::out);
 		
+		if (root->right == NULL)
+			saveTo << "shit" << endl;
+		//for(int i = 0; i < len; i++)
+		//	saveTo << entryArray[i].identifier << "\t" <<entryArray[i].x << "\t" << entryArray[i].y << endl;
 		//saveTo << entryArray[1].identifier << "\t" <<entryArray[1].x << "\t" << entryArray[1].y << endl;
 		saveTo << temp->identifier << "\t" <<temp->x << "\t" << temp->y << endl;
 
