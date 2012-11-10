@@ -6,7 +6,7 @@ using namespace std;
 
 void HW04_uthnpApp::setup()
 {
-	vector<Entry*> vect;
+	vector<Entry*>* vect = new vector<Entry*>;
 	Entry* entryAdding;
 	string tempString;
 	ifstream locationsFile;
@@ -20,32 +20,30 @@ void HW04_uthnpApp::setup()
 		entryAdding->x = stringToDouble(tempString);
 		getline(locationsFile, tempString, '\r'); //get y value
 		entryAdding->y = stringToDouble(tempString);
-		vect.push_back(entryAdding);
+		vect->push_back(entryAdding);
 	}
 	locationsFile.close();
 
 	//transfer vector data to Entry array
-	Entry* entryArray = new Entry[vect.size()];
-	int len = vect.size();
-	for (int i = 1; i < vect.size(); i++)
+	Entry* entryArray = new Entry[vect->size()];
+	int len = vect->size();
+	for (int i = 1; i < vect->size(); i++)
 	{
-		entryArray[i] = *(vect.at(i));
+		entryArray[i] = *(vect->at(i));
 	}
-	vect.~vector();
+	delete vect;
 
 	//call build function with the array and length.
 	uthnpStarbucks* root = new uthnpStarbucks();
 	(*root).build(entryArray,len);
 
 	//draw the starbucks locations on a surface
-	mySurface_ = new Surface(kTextureSize,kTextureSize,false);
+	//mySurface_ = new Surface(kTextureSize,kTextureSize,false);
 	//Surface mapIMG (loadImage(loadResource(MAP_IMG)));
-	//mySurface_ = new Surface(loadImage(loadResource(MAP_IMG)));
+	mySurface_ = new Surface(loadImage(loadResource(MAP_IMG)));
 
 	uint8_t* pixels = (*mySurface_).getData();
-	int numPixels = max(kAppWidth, kAppHeight);
-	numPixels *= numPixels;
-	starbucksOnSurface(root, pixels, numPixels);
+	starbucksOnSurface(root, pixels);
 	
 }
 
@@ -84,24 +82,26 @@ double HW04_uthnpApp::latitudeToY (double lat)
 
 double HW04_uthnpApp::longtitudeToX (double lon)
 {
-	return ((lon - 24) / (25));
+	return (abs(lon - 24) / (25));
 }
 
-void HW04_uthnpApp::starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData, int len)
+void HW04_uthnpApp::starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData)
 {
 	if (root == NULL) {return;}
 
-	double x = root->entry->x;
-	double y = root->entry->y;
-	int index = 3*(x + (y*kAppWidth));
-	if (index >= len) {return;}
+	Entry* data = root->entry;
 
-	surfData[index] = 1;
-	surfData[index+1] = 1;
-	surfData[index+2] = 0;
-
-	starbucksOnSurface(root->left, surfData, len);
-	starbucksOnSurface(root->right, surfData, len);
+	double x = kAppWidth * (*data).x;
+	double y = kAppHeight * (*data).y;
+	int index = (int)(3*(x + (y*kAppWidth)));
+	if (index >= 0)
+	{
+		surfData[index] = 255;
+		surfData[index+1] = 255;
+		surfData[index+2] = 0;
+	}
+	starbucksOnSurface(root->left, surfData);
+	starbucksOnSurface(root->right, surfData);
 }
 
 CINDER_APP_BASIC( HW04_uthnpApp, RendererGl )

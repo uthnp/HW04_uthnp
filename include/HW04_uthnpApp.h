@@ -42,7 +42,7 @@ class HW04_uthnpApp : public AppBasic {
 	* Goes through the starbuck kd tree structure, finds the coordinates of each starbucks and draws a point on the
 	* surface object at those coordinates.
 	*/
-	void starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData, int len);
+	void starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData);
 
 private:
 	Surface* mySurface_;
