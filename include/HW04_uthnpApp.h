@@ -42,10 +42,31 @@ class HW04_uthnpApp : public AppBasic {
 	* Goes through the starbuck kd tree structure, finds the coordinates of each starbucks and draws a point on the
 	* surface object at those coordinates.
 	*/
-	void starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData);
+	void starbucksOnSurface (uthnpStarbucks* root, uint8_t* surfData, int arrayHeight);
+	/*
+	*
+	*/
+	uthnpStarbucks* gatherCensusData (string file);
+	/*
+	*
+	*/
+	int findChangeInPopInRadius (uthnpStarbucks* census1, uthnpStarbucks* census2, int x, int y, int radius);
+	/*
+	*
+	*/
+	int findNumStarbucksInRadius (uthnpStarbucks* root, int x, int y, int radius);
 
 private:
+	uthnpStarbucks* root;
+	uthnpStarbucks* census2000;
+	uthnpStarbucks* census2010;
+	Color8u* popChangeVsNumStarb;
 	Surface* mySurface_;
+	int xSelected;
+	int ySelected;
+	Entry* nearestStarbucks;
+
+	static const int calcRadius = 20; // radius for the population change functions
 	//Width and height of the screen
 	static const int kAppWidth=600;
 	static const int kAppHeight=600;
