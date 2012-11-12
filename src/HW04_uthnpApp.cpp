@@ -71,7 +71,7 @@ void HW04_uthnpApp::update()
 	double y = (1.0 * ySelected)/kAppHeight;
 	nearestStarbucks = (*root).getNearest(x, y);
 
-	int popChange = findChangeInPopInRadius(census2000, census2010, x, y, calcRadius);
+	int popChange = findPopInRadius(census2000, x, y, calcRadius) - findPopInRadius(census2010, x, y, calcRadius);
 	int numStarbucks = findNumStarbucksInRadius(root, x, y, calcRadius);
 	popChangeVsNumStarb->r = sin((double)popChange/(double)numStarbucks);
 	popChangeVsNumStarb->g = cos((double)popChange/(double)numStarbucks);
@@ -133,25 +133,27 @@ uthnpStarbucks* HW04_uthnpApp::gatherCensusData (string file)
 	vector<Entry*>* vect = new vector<Entry*>;
 	Entry* entryAdding;
 	string tempString;
-	ifstream locationsFile;
-	locationsFile.open(file, ios::in);
+	ifstream* tempFile = new ifstream();
+	(*tempFile).open(file, ios::in);
+	(*tempFile).clear();
 	//read file and put data into new entry object. put entry object into vector.
-	while (locationsFile.good())
+	while ((*tempFile).good())
 	{
 		entryAdding = new Entry();
-		getline(locationsFile, tempString, ','); //no need
-		getline(locationsFile, tempString, ','); //no need
-		getline(locationsFile, tempString, ','); //no need
-		getline(locationsFile, tempString, ','); //no need
+		getline(*tempFile, tempString, ','); //no need
+		getline(*tempFile, tempString, ','); //no need
+		getline(*tempFile, tempString, ','); //no need
+		getline(*tempFile, tempString, ','); //no need
 
-		getline(locationsFile, entryAdding->identifier, ','); //get population
-		getline(locationsFile, tempString, ','); //get x value
+		getline(*tempFile, entryAdding->identifier, ','); //get population
+		getline(*tempFile, tempString, ','); //get x value
 		entryAdding->x = longtitudeToX(stringToDouble(tempString));
-		getline(locationsFile, tempString, '\r'); //get y value
+		getline(*tempFile, tempString, '\r'); //get y value
 		entryAdding->y = latitudeToY(stringToDouble(tempString));
 		vect->push_back(entryAdding);
 	}
-	locationsFile.close();
+	(*tempFile).close();
+	delete tempFile;
 
 	//transfer vector data to Entry array
 	Entry* entryArray = new Entry[vect->size()];
@@ -167,9 +169,16 @@ uthnpStarbucks* HW04_uthnpApp::gatherCensusData (string file)
 	return census;
 }
 
-int HW04_uthnpApp::findChangeInPopInRadius (uthnpStarbucks* census1, uthnpStarbucks* census2, int x, int y, int radius)
+int HW04_uthnpApp::findPopInRadius (uthnpStarbucks* census, int x, int y, int radius)
 {
-	return 255;
+	if (census == NULL) {return 0;}
+	double dx = (root->entry->x) - x;
+	double dy = (root->entry->y) - y;
+	if (radius < sqrt(dx*dx + dy*dy)) {return 0;}
+
+	int pop = (int)stringToDouble(census->entry->identifier);
+
+	return pop + findPopInRadius(census->left, x, y, radius) + findPopInRadius(census->right, x, y, radius);
 }
 
 int HW04_uthnpApp::findNumStarbucksInRadius (uthnpStarbucks* root, int x, int y, int radius)

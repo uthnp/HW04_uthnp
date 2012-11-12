@@ -50,7 +50,7 @@ class HW04_uthnpApp : public AppBasic {
 	/*
 	*
 	*/
-	int findChangeInPopInRadius (uthnpStarbucks* census1, uthnpStarbucks* census2, int x, int y, int radius);
+	int findPopInRadius (uthnpStarbucks* census, int x, int y, int radius);
 	/*
 	*
 	*/
